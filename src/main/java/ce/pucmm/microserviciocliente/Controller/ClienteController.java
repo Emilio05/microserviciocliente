@@ -41,6 +41,16 @@ public class ClienteController {
         return "clientes";
     }
 
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public String loginPOST(
+//            @RequestParam(value = "username", required = false) String username,
+//            @RequestParam(value = "password", required = false) String password
+//    ) {
+//        usuarioService.autoLogin(username, password);
+//
+//        return "redirect:/";
+//    }
+
     @RequestMapping("/todos")
     public List<Cliente> verTodosLosClientes() {
         String API_KEY = "eca1ad61d12248452578b2c4f1eda5963d6d94b5";
