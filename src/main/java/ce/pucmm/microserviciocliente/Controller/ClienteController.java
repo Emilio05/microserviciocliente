@@ -85,8 +85,9 @@ public class ClienteController {
         Client client = new Client(API_KEY);
         try{
             client.sendMessage(
-                    "20120994@ce.pumm.edu.do",
-                    email,
+
+                    "20120994@topograpp.site",
+                     ""+ email,
                     "Informacion de aceeso al sistema",
                     "Nombre de Usuario: " + username + "\n Contrasena: "+ password +"\n Enlace del sistema: topograpp.site ",
                     "<b>Hola Mundo desde SparkPost</b>");
