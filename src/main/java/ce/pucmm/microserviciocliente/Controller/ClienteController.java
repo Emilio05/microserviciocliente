@@ -57,19 +57,7 @@ public class ClienteController {
 
     @RequestMapping("/todos")
     public List<Cliente> verTodosLosClientes() {
-        String API_KEY = "eca1ad61d12248452578b2c4f1eda5963d6d94b5";
-        Client client = new Client(API_KEY);
-        try{
-            client.sendMessage(
-                    "20120994@ce.pumm.edu.do",
-                    "emilio.rojas05@gmail.com",
-                    "Informacion de acceso al sistema",
-                    "Nombre de Usuario:  ",
-                    "<b>Hola Mundo desde SparkPost</b>");
-        }
-        catch (SparkPostException s){
-            System.out.println("ERROR");
-        }
+
         return clienteService.buscarTodosClientes();
     }
 

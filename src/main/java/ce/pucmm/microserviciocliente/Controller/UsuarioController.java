@@ -38,13 +38,6 @@ public class UsuarioController {
     @RequestMapping("/todos")
     public List<Usuario> verTodosLosUsuarios() {
 
-//        Usuario usuario = new Usuario();
-//                usuario.setId(1);
-//        usuario.setUsername("emilio05");
-//        usuario.setPassword("emilin05");
-//        usuario.setEmail("emilio.rojas05@gmail.com");
-//        usuario.setRol_id("1");
-//        usuarioService.crearUsuario(usuario);
         return usuarioService.usuariosAlmacen();
     }
 
