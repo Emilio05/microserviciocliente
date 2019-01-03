@@ -44,18 +44,15 @@ public class ClienteController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPOST(
+    public Boolean loginPOST(
             @RequestParam(value = "username", required = false) String username,
             @RequestParam(value = "password", required = false) String password
     ) {
-        ModelAndView model = new ModelAndView();
-        if (usuarioService.login(username, password)){
-            return "redirect:/";
-        }
-        else {
-            model.addObject("ERROR", "CREDENCIALES INVALIDOS");
-            return "login";
-        }
+
+        if(usuarioService.login(username, password))
+            return true;
+            else
+                return false;
     }
 
     @RequestMapping("/todos")
