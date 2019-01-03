@@ -46,6 +46,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 //        }
 //    }
 
+    public boolean login(String username, String password){
+
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        for (Usuario usuario : usuarios){
+
+            if(username == usuario.getUsername() && password == usuario.getPassword()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void actualizarUsuario(Usuario usuario) {
         crearUsuario(usuario);
     }

@@ -15,11 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/clientes")
 public class ClienteController {
 
@@ -41,15 +43,20 @@ public class ClienteController {
         return "clientes";
     }
 
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public String loginPOST(
-//            @RequestParam(value = "username", required = false) String username,
-//            @RequestParam(value = "password", required = false) String password
-//    ) {
-//        usuarioService.autoLogin(username, password);
-//
-//        return "redirect:/";
-//    }
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String loginPOST(
+            @RequestParam(value = "username", required = false) String username,
+            @RequestParam(value = "password", required = false) String password
+    ) {
+        ModelAndView model = new ModelAndView();
+        if (usuarioService.login(username, password)){
+            return "redirect:/";
+        }
+        else {
+            model.addObject("ERROR", "CREDENCIALES INVALIDOS");
+            return "login";
+        }
+    }
 
     @RequestMapping("/todos")
     public List<Cliente> verTodosLosClientes() {
