@@ -1,5 +1,6 @@
 package ce.pucmm.microserviciocliente.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -33,6 +34,7 @@ public class Usuario implements Serializable {
     private Rol rol;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval =  true)
+    @JsonIgnore
     private Cliente cliente;
 
     private boolean deleted = false;

@@ -1,6 +1,7 @@
 package ce.pucmm.microserviciocliente.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Loader;
 import org.hibernate.annotations.Where;
 
@@ -27,7 +28,7 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false, unique = true, updatable = false)
-    private long id;
+    private int id;
 
     @Column(name = "nombre")
     private String nombre;
@@ -39,6 +40,7 @@ public class Cliente implements Serializable {
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinColumn(name = "usuario")
     private Usuario usuario;
 
@@ -60,11 +62,11 @@ public class Cliente implements Serializable {
         this.facturas = factura;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -31,8 +31,7 @@ public class Factura implements Serializable {
     @JoinColumn(name = "cliente")
     private Cliente cliente;
 
-    @OneToMany(mappedBy="factura")
-    private Set<Transaccion> transacciones;
+
 
 
     private boolean deleted = false;
@@ -41,12 +40,12 @@ public class Factura implements Serializable {
 
     }
 
-    public Factura(LocalDate fecha, double total, String condicion, Cliente cliente, Set<Transaccion> transacciones) {
+    public Factura(LocalDate fecha, double total, String condicion, Cliente cliente) {
         this.fecha = fecha;
         this.total = total;
         this.condicion = condicion;
         this.cliente = cliente;
-        this.transacciones = transacciones;
+
     }
 
     public int getId() {
@@ -89,13 +88,6 @@ public class Factura implements Serializable {
         this.cliente = cliente;
     }
 
-    public Set<Transaccion> getTransacciones() {
-        return transacciones;
-    }
-
-    public void setTransacciones(Set<Transaccion> transacciones) {
-        this.transacciones = transacciones;
-    }
 
     public boolean isDeleted() {
         return deleted;
