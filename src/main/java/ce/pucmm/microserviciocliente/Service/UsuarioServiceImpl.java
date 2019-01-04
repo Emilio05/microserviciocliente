@@ -4,6 +4,7 @@ package ce.pucmm.microserviciocliente.Service;
 import ce.pucmm.microserviciocliente.Model.Usuario;
 import ce.pucmm.microserviciocliente.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,12 +17,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @Transactional
     public void crearUsuario(Usuario usuario) {
-        usuario.setPassword(usuario.getPassword());
+        usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
         usuarioRepository.save(usuario);
     }
+
+
 
 
 //    @Override

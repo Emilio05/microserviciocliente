@@ -1,10 +1,10 @@
 package ce.pucmm.microserviciocliente.Model;
 
-
 import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity(name = "Usuario")
 @Table(name = "usuario")
@@ -16,29 +16,48 @@ public class Usuario implements Serializable {
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     private int id;
 
+    @NotEmpty(message="El usuario no puede estar vacio")
     @Column(name = "username")
     private String username;
 
+    @NotEmpty(message="La contrasena no puede estar vacia")
     @Column(name = "password")
     private String password;
 
+    @NotEmpty(message="El correo no puede estar vacio")
     @Column(name = "email")
     private String email;
 
-    @Column(name = "rol_id", nullable = true, updatable = false)
-    private String rol_id;
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "rol_id", nullable = true, updatable = false)
+    private Rol rol;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval =  true)
+    private Cliente cliente;
 
     private boolean deleted = false;
 
-    public Usuario() {
+    public Usuario(){
 
     }
-
-    public Usuario(String username, String password, String email, String rol_id) {
+    public Usuario(String username, String password, String email, Rol rol, Cliente cliente) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.rol_id = rol_id;
+        this.rol = rol;
+        this.cliente = cliente;
+        this.active = 1;
+    }
+
+
+    private int active;
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
     }
 
     public int getId() {
@@ -73,12 +92,20 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    public String getRol_id() {
-        return rol_id;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setRol_id(String rol_id) {
-        this.rol_id = rol_id;
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public boolean isDeleted() {

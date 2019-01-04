@@ -9,36 +9,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Rol")
-@Table(name = "rol")
+@Entity
 @Where(clause = "deleted = 0")
 public class Rol implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "id", nullable = false, unique = true, updatable = false)
-    private int id;
-
+    @Column(name = "id")
+    private long id;
     @Column(name = "nombreRol")
     private String nombreRol;
 
+    @OneToMany(  mappedBy = "rol", cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Usuario> usuarios = new ArrayList<>();
 
     private boolean deleted = false;
 
-
-    public Rol() {
-
-    }
-
-    public Rol(String nombreRol) {
-        this.nombreRol = nombreRol;
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -49,7 +41,6 @@ public class Rol implements Serializable {
     public void setNombreRol(String nombreRol) {
         this.nombreRol = nombreRol;
     }
-
 
     public boolean isDeleted() {
         return deleted;

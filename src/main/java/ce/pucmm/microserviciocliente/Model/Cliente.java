@@ -1,10 +1,22 @@
 package ce.pucmm.microserviciocliente.Model;
 
 
+import org.hibernate.annotations.Loader;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Base64;
+import java.util.HashSet;
+import java.util.Set;
+
+
+import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity(name = "Cliente")
 @Table(name = "cliente")
@@ -15,7 +27,7 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false, unique = true, updatable = false)
-    private int id;
+    private long id;
 
     @Column(name = "nombre")
     private String nombre;
@@ -26,30 +38,33 @@ public class Cliente implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "usuario_id")
-    private String usuario_id;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario")
+    private Usuario usuario;
 
-
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval =  true)
+    private Set<Factura> facturas;
 
     private boolean deleted = false;
 
 
-    public Cliente() {
+    public Cliente(){
 
     }
 
-    public Cliente(String nombre, String direccion, String email, String usuario_id) {
+    public Cliente(String nombre, String direccion, String email, Usuario usuario, Set<Factura> factura) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.email = email;
-        this.usuario_id = usuario_id;
+        this.usuario = usuario;
+        this.facturas = factura;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -77,16 +92,20 @@ public class Cliente implements Serializable {
         this.email = email;
     }
 
-    public String getUsuario() {
-        return usuario_id;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public String getUsuario_id() {
-        return usuario_id;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public void setUsuario_id(String usuario_id) {
-        this.usuario_id = usuario_id;
+    public Set<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(Set<Factura> facturas) {
+        this.facturas = facturas;
     }
 
     public boolean isDeleted() {
@@ -97,3 +116,4 @@ public class Cliente implements Serializable {
         this.deleted = deleted;
     }
 }
+

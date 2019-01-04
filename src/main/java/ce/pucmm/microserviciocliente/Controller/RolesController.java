@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,41 +35,36 @@ public class RolesController {
     @RequestMapping("/todos")
     public List<Rol> verTodosLosRoles() {
 
-//        Rol rol = new Rol();
-//                rol.setId(1);
-//        rol.setNombreRol("Almacen");
-//        rolService.crearRol(rol);
         return rolService.buscarTodosRoles();
     }
 
-    @GetMapping(value = "/ver/{id}")
-    public String rol(Model model, @PathVariable String id) {
-        Rol r = rolService.buscarPorId(Long.parseLong(id));
-        model.addAttribute("rol", r);
-        return "rol";
-    }
 
-
-    @PostMapping("/")
-    public String crearRol(@RequestParam("nombrerol") String rol) {
+    @PostMapping("/crear/")
+    public void crearRol(@RequestParam("nombrerol") String rol, HttpServletResponse httpResponse) throws IOException  {
         Rol r = new Rol();
         r.setNombreRol(rol);
         rolService.crearRol(r);
-        return "redirect:/roles/";
+
+        httpResponse.sendRedirect("http://localhost:8080/roles/");
+
     }
 
     @PostMapping("/modificar/")
-    public String modificarRol(@RequestParam("nombrerol2") String rol, @RequestParam("id2") String id) {
+    public void modificarRol(@RequestParam("nombrerol2") String rol, @RequestParam("id2") String id, HttpServletResponse httpResponse) throws IOException  {
         Rol r = rolService.buscarPorId(Long.parseLong(id));
         r.setNombreRol(rol);
         rolService.actualizarRol(r);
-        return "redirect:/roles/";
+
+        httpResponse.sendRedirect("http://localhost:8080/roles/");
+
     }
 
 
     @PostMapping(value = "/eliminar/{id}")
-    public String borrarRol(@PathVariable String id) {
+    public void borrarRol(@PathVariable String id,  HttpServletResponse httpResponse) throws IOException  {
         rolService.borrarRolPorId(Long.parseLong(id));
-        return "redirect:/roles/";
+
+        httpResponse.sendRedirect("http://localhost:8080/roles/");
+
     }
 }
